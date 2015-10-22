@@ -251,7 +251,6 @@ class Flash():
 
 
 	def __getU30__(self, data):
-		from ABC import ByteArray
 		if len(data) == 0: return 0
 
 		b = ByteArray(data[:4])
@@ -432,7 +431,6 @@ class Flash():
 
 
 	def disassembleABC(self, DoABC):
-		from ABC import Abc
 		self.abc = Abc(DoABC.ABCData, DoABC.Name)
 
 		if self.abc.major != 46 or self.abc.minor != 16:
@@ -493,7 +491,7 @@ class Flash():
 
 			if argtype in ['u8']:
 				size += 1
-				arg = code[off+1]
+				arg = ord(code[off+1])
 
 			if argtype in ['offset']:
 				size += 3
@@ -547,7 +545,7 @@ class Flash():
 		return insns
 
 
-''' 3rd-party code follows below, conveniently wrapped into this file'''
+''' start of 3rd-party code'''
 
 # ***** BEGIN LICENSE BLOCK *****
 # Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -1521,3 +1519,6 @@ class Abc():
 				name = self.names[self.data.readU30()];
 			m.activation = Traits(None)
 			self.parseTraits(m.activation)
+
+''' end of 3rd-party code'''
+
