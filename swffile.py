@@ -12,136 +12,140 @@ from struct import *
 
 # AVM2 opcodes
 opcodes = {}
-opcodes[0x02] = { "name" : "nop", "argtype" : "none" }
-opcodes[0x03] = { "name" : "throw", "argtype" : "none" }
-opcodes[0x07] = { "name" : "dxnslate", "argtype" : "none" }
-opcodes[0x08] = { "name" : "kill", "argtype" : "register" }
-opcodes[0x09] = { "name" : "label", "argtype" : "none" }
-opcodes[0x0c] = { "name" : "ifnlt", "argtype" : "offset" }
-opcodes[0x0d] = { "name" : "ifnle", "argtype" : "offset" }
-opcodes[0x0e] = { "name" : "ifngt", "argtype" : "offset" }
-opcodes[0x0f] = { "name" : "ifnge", "argtype" : "offset" }
-opcodes[0x10] = { "name" : "jump", "argtype" : "offset" }
-opcodes[0x11] = { "name" : "iftrue", "argtype" : "offset" }
-opcodes[0x12] = { "name" : "iffalse", "argtype" : "offset" }
-opcodes[0x13] = { "name" : "ifeq", "argtype" : "offset" }
-opcodes[0x14] = { "name" : "ifne", "argtype" : "offset" }
-opcodes[0x15] = { "name" : "iflt", "argtype" : "offset" }
-opcodes[0x16] = { "name" : "ifle", "argtype" : "offset" }
-opcodes[0x17] = { "name" : "ifgt", "argtype" : "offset" }
-opcodes[0x18] = { "name" : "ifge", "argtype" : "offset" }
-opcodes[0x19] = { "name" : "ifstricteq", "argtype" : "offset" }
-opcodes[0x1a] = { "name" : "ifstrictne", "argtype" : "offset" }
-opcodes[0x1c] = { "name" : "pushwith", "argtype" : "none" }
-opcodes[0x1d] = { "name" : "popscope", "argtype" : "none" }
-opcodes[0x1e] = { "name" : "nextname", "argtype" : "none" }
-opcodes[0x1f] = { "name" : "hasnext", "argtype" : "none" }
-opcodes[0x20] = { "name" : "pushnull", "argtype" : "none" }
-opcodes[0x21] = { "name" : "pushundefined", "argtype" : "none" }
-opcodes[0x23] = { "name" : "nextvalue", "argtype" : "none" }
-opcodes[0x24] = { "name" : "pushbyte", "argtype" : "u8" }
-opcodes[0x25] = { "name" : "pushshort", "argtype" : "u30" }
-opcodes[0x26] = { "name" : "pushtrue", "argtype" : "none" }
-opcodes[0x27] = { "name" : "pushfalse", "argtype" : "none" }
-opcodes[0x28] = { "name" : "pushnan", "argtype" : "none" }
-opcodes[0x29] = { "name" : "pop", "argtype" : "none" }
-opcodes[0x2a] = { "name" : "dup", "argtype" : "none" }
-opcodes[0x2b] = { "name" : "swap", "argtype" : "none" }
-opcodes[0x2c] = { "name" : "pushstring", "argtype" : "string" }
-opcodes[0x2d] = { "name" : "pushint", "argtype" : "integer" }
-opcodes[0x2e] = { "name" : "pushuint", "argtype" : "uinteger" }
-opcodes[0x2f] = { "name" : "pushdouble", "argtype" : "double" }
-opcodes[0x30] = { "name" : "pushscope", "argtype" : "none" }
-opcodes[0x31] = { "name" : "pushnamespace", "argtype" : "u30" }
-opcodes[0x32] = { "name" : "hasnext2", "argtype" : "register_register" }
-opcodes[0x40] = { "name" : "newfunction", "argtype" : "method" }
-opcodes[0x41] = { "name" : "call", "argtype" : "u30" }
-opcodes[0x46] = { "name" : "callproperty", "argtype" : "multiname_u30" }
-opcodes[0x47] = { "name" : "returnvoid", "argtype" : "none" }
-opcodes[0x48] = { "name" : "returnvalue", "argtype" : "none" }
-opcodes[0x42] = { "name" : "construct", "argtype" : "u30" }
-opcodes[0x49] = { "name" : "constructsuper", "argtype" : "u30" }
-opcodes[0x4a] = { "name" : "constructprop", "argtype" : "multiname_u30" }
-opcodes[0x4c] = { "name" : "callproplex", "argtype" : "multiname_u30" }
-opcodes[0x4f] = { "name" : "callpropvoid", "argtype" : "multiname_u30" }
-opcodes[0x53] = { "name" : "applytype", "argtype" : "u30" }
-opcodes[0x55] = { "name" : "newobject", "argtype" : "u30" }
-opcodes[0x56] = { "name" : "newarray", "argtype" : "u30" }
-opcodes[0x57] = { "name" : "newactivation", "argtype" : "none" }
-opcodes[0x58] = { "name" : "newclass", "argtype" : "u30" }
-opcodes[0x5a] = { "name" : "newcatch", "argtype" : "u30" }
-opcodes[0x5d] = { "name" : "findpropstrict", "argtype" : "multiname" }
-opcodes[0x5e] = { "name" : "findproperty", "argtype" : "multiname" }
-opcodes[0x5f] = { "name" : "finddef", "argtype" : "multiname" }
-opcodes[0x60] = { "name" : "getlex", "argtype" : "multiname" }
-opcodes[0x61] = { "name" : "setproperty", "argtype" : "multiname" }
-opcodes[0x62] = { "name" : "getlocal", "argtype" : "register" }
-opcodes[0x63] = { "name" : "setlocal", "argtype" : "register" }
-opcodes[0x64] = { "name" : "getglobalscope", "argtype" : "none" }
-opcodes[0x65] = { "name" : "getscopeobject", "argtype" : "u8" }
-opcodes[0x66] = { "name" : "getproperty", "argtype" : "multiname" }
-opcodes[0x68] = { "name" : "initproperty", "argtype" : "multiname" }
-opcodes[0x6a] = { "name" : "deleteproperty", "argtype" : "multiname" }
-opcodes[0x6c] = { "name" : "getslot", "argtype" : "u30" }
-opcodes[0x6d] = { "name" : "setslot", "argtype" : "u30" }
-opcodes[0x70] = { "name" : "convert_s", "argtype" : "none" }
-opcodes[0x73] = { "name" : "convert_i", "argtype" : "none" }
-opcodes[0x74] = { "name" : "convert_u", "argtype" : "none" }
-opcodes[0x75] = { "name" : "convert_d", "argtype" : "none" }
-opcodes[0x76] = { "name" : "convert_b", "argtype" : "none" }
-opcodes[0x77] = { "name" : "convert_o", "argtype" : "none" }
-opcodes[0x78] = { "name" : "checkfilter", "argtype" : "none" }
-opcodes[0x80] = { "name" : "coerce", "argtype" : "multiname" }
-opcodes[0x82] = { "name" : "coerce_a", "argtype" : "none" }
-opcodes[0x85] = { "name" : "coerce_s", "argtype" : "none" }
-opcodes[0x87] = { "name" : "astypelate", "argtype" : "none" }
-opcodes[0x90] = { "name" : "negate", "argtype" : "none" }
-opcodes[0x91] = { "name" : "increment", "argtype" : "none" }
-opcodes[0x92] = { "name" : "inclocal", "argtype" : "u30" }
-opcodes[0x93] = { "name" : "decrement", "argtype" : "none" }
-opcodes[0x94] = { "name" : "declocal", "argtype" : "u30" }
-opcodes[0x95] = { "name" : "typeof", "argtype" : "none" }
-opcodes[0x96] = { "name" : "not", "argtype" : "none" }
-opcodes[0x97] = { "name" : "bitnot", "argtype" : "none" }
-opcodes[0xa0] = { "name" : "add", "argtype" : "none" }
-opcodes[0xa1] = { "name" : "subtract", "argtype" : "none" }
-opcodes[0xa2] = { "name" : "multiply", "argtype" : "none" }
-opcodes[0xa3] = { "name" : "divide", "argtype" : "none" }
-opcodes[0xa4] = { "name" : "modulo", "argtype" : "none" }
-opcodes[0xa5] = { "name" : "lshift", "argtype" : "none" }
-opcodes[0xa6] = { "name" : "rshift", "argtype" : "none" }
-opcodes[0xa7] = { "name" : "urshift", "argtype" : "none" }
-opcodes[0xa8] = { "name" : "bitand", "argtype" : "none" }
-opcodes[0xa9] = { "name" : "bitor", "argtype" : "none" }
-opcodes[0xab] = { "name" : "equals", "argtype" : "none" }
-opcodes[0xaa] = { "name" : "bitxor", "argtype" : "none" }
-opcodes[0xac] = { "name" : "strictequals", "argtype" : "none" }
-opcodes[0xad] = { "name" : "lessthan", "argtype" : "none" }
-opcodes[0xae] = { "name" : "lessequals", "argtype" : "none" }
-opcodes[0xaf] = { "name" : "greaterthan", "argtype" : "none" }
-opcodes[0xb0] = { "name" : "greaterequals", "argtype" : "none" }
-opcodes[0xb1] = { "name" : "instanceof", "argtype" : "none" }
-opcodes[0xb2] = { "name" : "istype", "argtype" : "multiname" }
-opcodes[0xb3] = { "name" : "istypelate", "argtype" : "none" }
-opcodes[0xb4] = { "name" : "in", "argtype" : "none" }
-opcodes[0xc0] = { "name" : "increment_i", "argtype" : "none" }
-opcodes[0xc1] = { "name" : "decrement_i", "argtype" : "none" }
-opcodes[0xc2] = { "name" : "inclocal_i", "argtype" : "u30" }
-opcodes[0xc3] = { "name" : "declocal_i", "argtype" : "u30" }
-opcodes[0xc4] = { "name" : "negate_i", "argtype" : "none" }
-opcodes[0xc5] = { "name" : "add_i", "argtype" : "none" }
-opcodes[0xc6] = { "name" : "subtract_i", "argtype" : "none" }
-opcodes[0xc7] = { "name" : "multiply_i", "argtype" : "none" }
-opcodes[0xd0] = { "name" : "getlocal_0", "argtype" : "none" }
-opcodes[0xd1] = { "name" : "getlocal_1", "argtype" : "none" }
-opcodes[0xd2] = { "name" : "getlocal_2", "argtype" : "none" }
-opcodes[0xd3] = { "name" : "getlocal_3", "argtype" : "none" }
-opcodes[0xd4] = { "name" : "setlocal_0", "argtype" : "none" }
-opcodes[0xd5] = { "name" : "setlocal_1", "argtype" : "none" }
-opcodes[0xd6] = { "name" : "setlocal_2", "argtype" : "none" }
-opcodes[0xd7] = { "name" : "setlocal_3", "argtype" : "none" }
-opcodes[0xf0] = { "name" : "debugline", "argtype" : "u30" }
-opcodes[0xf1] = { "name" : "debugfile", "argtype" : "string" }
+opcodes[0x02] = { "name" : "nop", "argtypes" : [] }
+opcodes[0x03] = { "name" : "throw", "argtypes" : [] }
+opcodes[0x04] = { "name" : "getsuper", "argtypes" : [ "u30" ] }
+opcodes[0x07] = { "name" : "dxnslate", "argtypes" : [] }
+opcodes[0x08] = { "name" : "kill", "argtypes" : [ "register" ] }
+opcodes[0x09] = { "name" : "label", "argtypes" : [] }
+opcodes[0x0c] = { "name" : "ifnlt", "argtypes" : [ "offset" ] }
+opcodes[0x0d] = { "name" : "ifnle", "argtypes" : [ "offset" ] }
+opcodes[0x0e] = { "name" : "ifngt", "argtypes" : [ "offset" ] }
+opcodes[0x0f] = { "name" : "ifnge", "argtypes" : [ "offset" ] }
+opcodes[0x10] = { "name" : "jump", "argtypes" : [ "offset" ] }
+opcodes[0x11] = { "name" : "iftrue", "argtypes" : [ "offset" ] }
+opcodes[0x12] = { "name" : "iffalse", "argtypes" : [ "offset" ] }
+opcodes[0x13] = { "name" : "ifeq", "argtypes" : [ "offset" ] }
+opcodes[0x14] = { "name" : "ifne", "argtypes" : [ "offset" ] }
+opcodes[0x15] = { "name" : "iflt", "argtypes" : [ "offset" ] }
+opcodes[0x16] = { "name" : "ifle", "argtypes" : [ "offset" ] }
+opcodes[0x17] = { "name" : "ifgt", "argtypes" : [ "offset" ] }
+opcodes[0x18] = { "name" : "ifge", "argtypes" : [ "offset" ] }
+opcodes[0x19] = { "name" : "ifstricteq", "argtypes" : [ "offset" ] }
+opcodes[0x1a] = { "name" : "ifstrictne", "argtypes" : [ "offset" ] }
+opcodes[0x1b] = { "name" : "lookupswitch", "argtypes" : [ "s24", "u30" ] } # + a varying number of s24's
+opcodes[0x1c] = { "name" : "pushwith", "argtypes" : [] }
+opcodes[0x1d] = { "name" : "popscope", "argtypes" : [] }
+opcodes[0x1e] = { "name" : "nextname", "argtypes" : [] }
+opcodes[0x1f] = { "name" : "hasnext", "argtypes" : [] }
+opcodes[0x20] = { "name" : "pushnull", "argtypes" : [] }
+opcodes[0x21] = { "name" : "pushundefined", "argtypes" : [] }
+opcodes[0x23] = { "name" : "nextvalue", "argtypes" : [] }
+opcodes[0x24] = { "name" : "pushbyte", "argtypes" : [ "u8" ] }
+opcodes[0x25] = { "name" : "pushshort", "argtypes" : [ "u30" ] }
+opcodes[0x26] = { "name" : "pushtrue", "argtypes" : [] }
+opcodes[0x27] = { "name" : "pushfalse", "argtypes" : [] }
+opcodes[0x28] = { "name" : "pushnan", "argtypes" : [] }
+opcodes[0x29] = { "name" : "pop", "argtypes" : [] }
+opcodes[0x2a] = { "name" : "dup", "argtypes" : [] }
+opcodes[0x2b] = { "name" : "swap", "argtypes" : [] }
+opcodes[0x2c] = { "name" : "pushstring", "argtypes" : [ "string" ] }
+opcodes[0x2d] = { "name" : "pushint", "argtypes" : [ "integer" ] }
+opcodes[0x2e] = { "name" : "pushuint", "argtypes" : [ "uinteger" ] }
+opcodes[0x2f] = { "name" : "pushdouble", "argtypes" : [ "double" ] }
+opcodes[0x30] = { "name" : "pushscope", "argtypes" : [] }
+opcodes[0x31] = { "name" : "pushnamespace", "argtypes" : [ "u30" ] }
+opcodes[0x32] = { "name" : "hasnext2", "argtypes" : [ "register", "register" ] }
+opcodes[0x40] = { "name" : "newfunction", "argtypes" : [ "method" ] }
+opcodes[0x41] = { "name" : "call", "argtypes" : [ "u30" ] }
+opcodes[0x46] = { "name" : "callproperty", "argtypes" : [ "multiname", "u30" ] }
+opcodes[0x47] = { "name" : "returnvoid", "argtypes" : [] }
+opcodes[0x48] = { "name" : "returnvalue", "argtypes" : [] }
+opcodes[0x42] = { "name" : "construct", "argtypes" : [ "u30" ] }
+opcodes[0x49] = { "name" : "constructsuper", "argtypes" : [ "u30" ] }
+opcodes[0x4a] = { "name" : "constructprop", "argtypes" : [ "multiname", "u30" ] }
+opcodes[0x4c] = { "name" : "callproplex", "argtypes" : [ "multiname", "u30" ] }
+opcodes[0x4e] = { "name" : "callsupervoid", "argtypes" : [ "multiname", "u30" ] }
+opcodes[0x4f] = { "name" : "callpropvoid", "argtypes" : [ "multiname", "u30" ] }
+opcodes[0x53] = { "name" : "applytype", "argtypes" : [ "u30" ] }
+opcodes[0x55] = { "name" : "newobject", "argtypes" : [ "u30" ] }
+opcodes[0x56] = { "name" : "newarray", "argtypes" : [ "u30" ] }
+opcodes[0x57] = { "name" : "newactivation", "argtypes" : [] }
+opcodes[0x58] = { "name" : "newclass", "argtypes" : [ "u30" ] }
+opcodes[0x59] = { "name" : "getdescendants", "argtypes" : [ "u30" ] }
+opcodes[0x5a] = { "name" : "newcatch", "argtypes" : [ "u30" ] }
+opcodes[0x5d] = { "name" : "findpropstrict", "argtypes" : [ "multiname" ] }
+opcodes[0x5e] = { "name" : "findproperty", "argtypes" : [ "multiname" ] }
+opcodes[0x5f] = { "name" : "finddef", "argtypes" : [ "multiname" ] }
+opcodes[0x60] = { "name" : "getlex", "argtypes" : [ "multiname" ] }
+opcodes[0x61] = { "name" : "setproperty", "argtypes" : [ "multiname" ] }
+opcodes[0x62] = { "name" : "getlocal", "argtypes" : [ "register" ] }
+opcodes[0x63] = { "name" : "setlocal", "argtypes" : [ "register" ] }
+opcodes[0x64] = { "name" : "getglobalscope", "argtypes" : [] }
+opcodes[0x65] = { "name" : "getscopeobject", "argtypes" : [ "u8" ] }
+opcodes[0x66] = { "name" : "getproperty", "argtypes" : [ "multiname" ] }
+opcodes[0x68] = { "name" : "initproperty", "argtypes" : [ "multiname" ] }
+opcodes[0x6a] = { "name" : "deleteproperty", "argtypes" : [ "multiname" ] }
+opcodes[0x6c] = { "name" : "getslot", "argtypes" : [ "u30" ] }
+opcodes[0x6d] = { "name" : "setslot", "argtypes" : [ "u30" ] }
+opcodes[0x70] = { "name" : "convert_s", "argtypes" : [] }
+opcodes[0x73] = { "name" : "convert_i", "argtypes" : [] }
+opcodes[0x74] = { "name" : "convert_u", "argtypes" : [] }
+opcodes[0x75] = { "name" : "convert_d", "argtypes" : [] }
+opcodes[0x76] = { "name" : "convert_b", "argtypes" : [] }
+opcodes[0x77] = { "name" : "convert_o", "argtypes" : [] }
+opcodes[0x78] = { "name" : "checkfilter", "argtypes" : [] }
+opcodes[0x80] = { "name" : "coerce", "argtypes" : [ "multiname" ] }
+opcodes[0x82] = { "name" : "coerce_a", "argtypes" : [] }
+opcodes[0x85] = { "name" : "coerce_s", "argtypes" : [] }
+opcodes[0x87] = { "name" : "astypelate", "argtypes" : [] }
+opcodes[0x90] = { "name" : "negate", "argtypes" : [] }
+opcodes[0x91] = { "name" : "increment", "argtypes" : [] }
+opcodes[0x92] = { "name" : "inclocal", "argtypes" : [ "u30" ] }
+opcodes[0x93] = { "name" : "decrement", "argtypes" : [] }
+opcodes[0x94] = { "name" : "declocal", "argtypes" : [ "u30" ] }
+opcodes[0x95] = { "name" : "typeof", "argtypes" : [] }
+opcodes[0x96] = { "name" : "not", "argtypes" : [] }
+opcodes[0x97] = { "name" : "bitnot", "argtypes" : [] }
+opcodes[0xa0] = { "name" : "add", "argtypes" : [] }
+opcodes[0xa1] = { "name" : "subtract", "argtypes" : [] }
+opcodes[0xa2] = { "name" : "multiply", "argtypes" : [] }
+opcodes[0xa3] = { "name" : "divide", "argtypes" : [] }
+opcodes[0xa4] = { "name" : "modulo", "argtypes" : [] }
+opcodes[0xa5] = { "name" : "lshift", "argtypes" : [] }
+opcodes[0xa6] = { "name" : "rshift", "argtypes" : [] }
+opcodes[0xa7] = { "name" : "urshift", "argtypes" : [] }
+opcodes[0xa8] = { "name" : "bitand", "argtypes" : [] }
+opcodes[0xa9] = { "name" : "bitor", "argtypes" : [] }
+opcodes[0xab] = { "name" : "equals", "argtypes" : [] }
+opcodes[0xaa] = { "name" : "bitxor", "argtypes" : [] }
+opcodes[0xac] = { "name" : "strictequals", "argtypes" : [] }
+opcodes[0xad] = { "name" : "lessthan", "argtypes" : [] }
+opcodes[0xae] = { "name" : "lessequals", "argtypes" : [] }
+opcodes[0xaf] = { "name" : "greaterthan", "argtypes" : [] }
+opcodes[0xb0] = { "name" : "greaterequals", "argtypes" : [] }
+opcodes[0xb1] = { "name" : "instanceof", "argtypes" : [] }
+opcodes[0xb2] = { "name" : "istype", "argtypes" : [ "multiname" ] }
+opcodes[0xb3] = { "name" : "istypelate", "argtypes" : [] }
+opcodes[0xb4] = { "name" : "in", "argtypes" : [] }
+opcodes[0xc0] = { "name" : "increment_i", "argtypes" : [] }
+opcodes[0xc1] = { "name" : "decrement_i", "argtypes" : [] }
+opcodes[0xc2] = { "name" : "inclocal_i", "argtypes" : [ "u30" ] }
+opcodes[0xc3] = { "name" : "declocal_i", "argtypes" : [ "u30" ] }
+opcodes[0xc4] = { "name" : "negate_i", "argtypes" : [] }
+opcodes[0xc5] = { "name" : "add_i", "argtypes" : [] }
+opcodes[0xc6] = { "name" : "subtract_i", "argtypes" : [] }
+opcodes[0xc7] = { "name" : "multiply_i", "argtypes" : [] }
+opcodes[0xd0] = { "name" : "getlocal_0", "argtypes" : [] }
+opcodes[0xd1] = { "name" : "getlocal_1", "argtypes" : [] }
+opcodes[0xd2] = { "name" : "getlocal_2", "argtypes" : [] }
+opcodes[0xd3] = { "name" : "getlocal_3", "argtypes" : [] }
+opcodes[0xd4] = { "name" : "setlocal_0", "argtypes" : [] }
+opcodes[0xd5] = { "name" : "setlocal_1", "argtypes" : [] }
+opcodes[0xd6] = { "name" : "setlocal_2", "argtypes" : [] }
+opcodes[0xd7] = { "name" : "setlocal_3", "argtypes" : [] }
+opcodes[0xf0] = { "name" : "debugline", "argtypes" : [ "u30" ] }
+opcodes[0xf1] = { "name" : "debugfile", "argtypes" : [ "string" ] }
 
 
 class SwfHeader():
@@ -231,6 +235,8 @@ class Flash():
 			0x52 : self.parseDoABC,
 		}
 
+		self.DoABC = []
+
 		self.parseTags()
 
 
@@ -238,34 +244,34 @@ class Flash():
 		return SwfHeader(data)
 
 
+	def __getS24__(self, data):
+		if len(data) == 0: return 0
+
+		b = ByteArray(data)
+		return b.readS24()
+
 	def __getU30len__(self, data):
 		if len(data) == 0: return 0
 
 		i = 0
-		l = 1
 		while (ord(data[i]) & 0x80):
-			l += 1
 			i += 1
 
-		return l 
+		return i + 1 
 
 
 	def __getU30__(self, data):
 		if len(data) == 0: return 0
 
-		b = ByteArray(data[:4])
+		b = ByteArray(data)
 		return b.readU30()
-		result = ord(data[0])
-
-		i = 0
-		while (ord(data[i]) & 0x80):
-			result = (result & (2**((i+1)*7)-i-1)) | (ord(data[i+1]) << ((i+1) * 7))
-			i += 1
-
-		return result
 
 
 	def uncompress(self, filename=None, data=None):
+		# if data has already been uncompressed, return it
+		if hasattr(self, '__data__'):
+			return self.__data__
+
 		if filename == None and data == None:
 			return None
 
@@ -283,6 +289,9 @@ class Flash():
 		elif self.__data__[:3] == 'CWS':
 			self.compressed = True
 			rawdata = zlib.decompress(self.__data__[8:])
+		else:
+			raise SwfFormatError('Unexpected magic string, not a Flash file.')
+			
 		
 		swfdata = 'FWS' + self.__data__[3] + pack('I', len(rawdata) + 8) + rawdata
 
@@ -384,7 +393,7 @@ class Flash():
 
 	# tag 0x45
 	def parseFileAttributes(self, tag):
-		if self.header.Version < 8:
+		if self.header.Version < 7:
 			raise SwfFormatError('FileAttributes tag not supported by this SWF version.')
 
 		if tag.Length != 4 or len(tag.Data) != 4:
@@ -421,128 +430,166 @@ class Flash():
 		if self.header.Version < 9:
 			raise SwfFormatError('DoABC tag found in SWF version that does not support it.')
 
-		self.DoABC = lambda:0
-		self.DoABC.Flags = lambda:0
+		DoABC = lambda:0
+		DoABC.Flags = lambda:0
 
-		self.DoABC.Flags.Value, = unpack('<I', tag.Data[:4])
-		self.DoABC.Flags.kDoAbcLazyInitializeFlag = 0 != (self.DoABC.Flags.Value & 1)
-		self.DoABC.Name = tag.Data[4:5+tag.Data[4:].find('\0')]
-		self.DoABC.ABCData = tag.Data[4+len(self.DoABC.Name):]
+		DoABC.Flags.Value, = unpack('<I', tag.Data[:4])
+		DoABC.Flags.kDoAbcLazyInitializeFlag = 0 != (DoABC.Flags.Value & 1)
+		DoABC.Name = tag.Data[4:5+tag.Data[4:].find('\0')]
+		DoABC.ABCData = tag.Data[4+len(DoABC.Name):]
+
+		self.DoABC.append(DoABC)
+
+	def __disas_method__(self, abc, method):
+		if method.kind == 1:
+			Params = ''
+			if len(method.paramNames):
+				for i in range(len(method.paramNames)):
+					if Params != '':
+						Params += ", "
+					if method.paramNames[i] == '':
+						if isinstance(method.paramTypes[i].name, str):
+							Params += "param" + str(i+1) + ":" + method.paramTypes[i].name
+						elif hasattr(method.paramTypes[i].name, 'name'):
+							Params += "param" + str(i+1) + ":" + method.paramTypes[i].name.name
+					else:
+						if method.paramTypes[i].name != None:
+							Params += method.paramNames[i] + ":" + method.paramTypes[i].name
+
+			return self.parseAvm2Data(abc, method.code)
+		else:
+			# FIXME: add support for other kinds
+			return None
+			
 
 
 	def disassembleABC(self, DoABC):
-		self.abc = Abc(DoABC.ABCData, DoABC.Name)
+		if not hasattr(DoABC, 'ABCData'):
+			raise SwfFormatError('DoABC tag without data.')
 
-		if self.abc.major != 46 or self.abc.minor != 16:
+		abc = Abc(DoABC.ABCData, DoABC.Name)
+
+		if abc.major != 46 or abc.minor != 16:
 			raise SwfFormatError('Unsupported AVM2 version.')
 
-		for c in self.abc.classes:
-			c.disassembly = lambda:0
-			c.disassembly = self.parseAvm2Data(c.init.code)
+		for c in abc.classes:
+			c.disassembly = {}
 
-			for n in c.names:
-				if c.names[n].kind == 1:
-					Params = ''
-					if len(c.names[n].paramNames):
-						for i in range(len(c.names[n].paramNames)):
-							if Params != '':
-								Params += ", "
-							if c.names[n].paramNames[i] == '':
-								if isinstance(c.names[n].paramTypes[i].name, str):
-									Params += "param" + str(i+1) + ":" + c.names[n].paramTypes[i].name
-								elif hasattr(c.names[n].paramTypes[i].name, 'name'):
-									Params += "param" + str(i+1) + ":" + c.names[n].paramTypes[i].name.name
-							else:
-								Params += c.names[n].paramNames[i] + ":" + c.names[n].paramTypes[i].name
-					
-					self.parseAvm2Data(c.names[n].code)
-					c.names[n].disassembly = lambda:0
-					c.names[n].disassembly = self.parseAvm2Data(c.init.code)
-				else:
-					# FIXME: add support for other kinds
-					continue
+			c.disassembly['class initializer'] = self.parseAvm2Data(abc, c.init.code)
+			c.disassembly['instance initializer'] = self.parseAvm2Data(abc, c.itraits.init.code)
 
-		return
+			for name, method in c.itraits.names.iteritems():
+				if method.kind == 1:
+					c.disassembly[name] = self.__disas_method__(abc, method)
+
+			for name, method in c.names.iteritems():
+				if method.kind == 1:
+					c.disassembly[name] = self.__disas_method__(abc, method)
+
+		return abc
 
 
-	def parseAvm2Data(self, code, ingoreUnknown=False):
-		if not hasattr(self, 'abc'): return
-
-		if code == None: return
-
+	def parseAvm2Data(self, abc, code, ignoreUnknown=False):
+		disas = {}
 		insns = []
+
+		disas['insns'] = insns
+		disas['rawdata'] = code
+
+		if code == None: return disas
 
 		off = 0
 		while off < len(code):
 			try:
 				opcode = opcodes[ord(code[off])]['name']
 			except KeyError:
-				# ignore unknown bytes
-				off += 1
-				continue
+				if ignoreUnknown == False:
+					raise SwfFormatError('Unsupported opcode: 0x%02x' % ord(code[off]))
+				else:
+					# ignore unknown bytes
+					off += 1
+					continue
 			else:
 				pass
 				
-
 			size = 1
 
-			arg = None
-			argtype = opcodes[ord(code[off])]['argtype']
+			args = []
+			argtypes = opcodes[ord(code[off])]['argtypes']
 
-			if argtype in ['u8']:
-				size += 1
-				arg = ord(code[off+1])
-
-			if argtype in ['offset']:
+			# 'lookupswitch' is the only variable-length instruction
+			if opcode == 'lookupswitch':
+				# default offset
+				args.append(self.__getS24__(code[off+size:off+size+3]) + off + size + 3)
 				size += 3
-				arg = code[off+1:off+4]
-				# FIXME resolve these
-				arg = 'offset'
+				
+				# number of cases
+				args.append(ord(code[off+size]))
+				size += 1
 
-			if argtype in ['u30', 'register', 'multiname', 'method']:
-				size += self.__getU30len__(code[off+1:])
-				arg = self.__getU30__(code[off+1:])
+				# skip over offsets
+				for i in range(0, args[-1]+1):
+					args.append(self.__getS24__(code[off+size:off+size+3]) + off + size + 3)
+					argtypes.append('offset')
+					size += 3
+			else:
+				for argtype in argtypes:
+					if argtype in ['u8']:
+						args.append(ord(code[off+size]))
+						size += 1
 
-			if argtype in ['multiname_u30', 'register_register']:
-				l = self.__getU30len__(code[off+1:])
-				size +=l
-				size += self.__getU30len__(code[off+1+l:])
-				# FIXME: resolve these
-				arg = argtype
+					if argtype in ['offset']:
+						args.append(self.__getS24__(code[off+size:off+size+3]) + off + size + 3)
+						size += 3
+#						arg = hex(arg)[2:]
 
-			if argtype in ['integer']:
-				size += self.__getU30len__(code[off+1:])
-				i = self.__getU30__(code[off+1:])
-				arg = self.abc.ints[i]
+					if argtype in ['u30', 'register', 'multiname', 'method']:
+						args.append(self.__getU30__(code[off+size:]))
+						size += self.__getU30len__(code[off+size:])
 
-			if argtype in ['uinteger']:
-				size += self.__getU30len__(code[off+1:])
-				i = self.__getU30__(code[off+1:])
-				arg = self.abc.uints[i]
+#					if argtype in ['multiname_u30', 'register_register']:
+#						l = self.__getU30len__(code[off+1:])
+#						size +=l
+#						size += self.__getU30len__(code[off+1+l:])
+#						# FIXME: resolve these
+#						args.append(argtype)
 
-			if argtype in ['double']:
-				size += self.__getU30len__(code[off+1:])
-				i = self.__getU30__(code[off+1:])
-				arg = self.abc.doubles[i]
+					if argtype in ['integer']:
+						i = self.__getU30__(code[off+size:])
+						args.append(abc.ints[i])
+						size += self.__getU30len__(code[off+size:])
 
-			if argtype in ['string']:
-				size += self.__getU30len__(code[off+1:])
-				i = self.__getU30__(code[off+1:])
-				arg = '"' + self.abc.strings[i] + '"'
+					if argtype in ['uinteger']:
+						i = self.__getU30__(code[off+size:])
+						args.append(abc.uints[i])
+						size += self.__getU30len__(code[off+size:])
+
+					if argtype in ['double']:
+						i = self.__getU30__(code[off+size:])
+						args.append(abc.doubles[i])
+						size += self.__getU30len__(code[off+size:])
+
+					if argtype in ['string']:
+						i = self.__getU30__(code[off+size:])
+						args.append('"' + abc.strings[i] + '"')
+						size += self.__getU30len__(code[off+size:])
 
 			hexcode = ''.join("{:02x} ".format(ord(b)) for b in code[off:off+size])
+
 			insn = {}
+			insn['args'] = args
+			insn['argtypes'] = argtypes
 			insn['hexcode'] = hexcode
-			insn['offset'] = off
+			insn['offset'] = int(off)
 			insn['opcode'] = opcode
-			insn['argtype'] = argtype
-			insn['arg'] = arg
+			insn['rawbytes'] = code[int(off):int(off)+size]
+			insn['size'] = size
 
 			insns.append(insn)
 
 			off += size
 
-		return insns
+		return disas
 
 
 ''' start of 3rd-party code'''
@@ -1051,6 +1098,10 @@ class ByteArray:
 	def readUTF8(self):
 		lenbytes = self.readU30()
 		return self.readBytes(lenbytes)
+
+	def readS24(self):
+		d = self.readBytes(3)
+		return unpack_from('<i', d + ('\xff' if (ord(d[2]) & 0x80) else '\x00' ))[0]
 
 	def readU30(self):
 		result = self.readU8()

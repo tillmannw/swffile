@@ -23,9 +23,10 @@ def main():
 	print "  ActionScript3: ", f.Flags.ActionScript3
 	print "     UseNetwork: ", f.Flags.UseNetwork
 
-	print "\nScriptLimits:"
-	print "     MaxRecursionDepth: ", f.ScriptLimits.MaxRecursionDepth
-	print "  ScriptTimeoutSeconds: ", f.ScriptLimits.ScriptTimeoutSeconds
+	if hasattr(f, 'ScriptLimits'):
+		print "\nScriptLimits:"
+		print "     MaxRecursionDepth: ", f.ScriptLimits.MaxRecursionDepth
+		print "  ScriptTimeoutSeconds: ", f.ScriptLimits.ScriptTimeoutSeconds
 
 	print "\nBackgroundColor:"
 	print "    BackgroundColor.Red: ", f.SetBackgroundColor.BackgroundColor.Red
@@ -43,21 +44,21 @@ def main():
 		print "        CompilationDate: ", f.ProductInfo.CompilationDate
 		print "  CompilationDateString: ", f.ProductInfo.CompilationDateString
 
-	print "\nDoABC:"
-	print "  Name:", f.DoABC.Name.rstrip('\0')
-	print "  Flags: %08x" % f.DoABC.Flags.Value
-	print "    kDoAbcLazyInitializeFlag: ", f.DoABC.Flags.kDoAbcLazyInitializeFlag
-
 	print "\nSymbolClass:"
 	print "  NumSymbols: ", f.SymbolClass.NumSymbols
 	for i in range(f.SymbolClass.NumSymbols):
 		print "    %04x: %s" % (f.SymbolClass.Tags[i], f.SymbolClass.Names[i])
 
-	f.disassembleABC(f.DoABC)
-	print "\nABC metadata:"
-	print "  major:minor version: %s:%s" % (f.abc.major, f.abc.minor)
-	print "  scriptName: %s" % f.abc.scriptName[:-1]
-	print "  publicNs: %s" % f.abc.publicNs
+	for DoABC in f.DoABC:
+		print "\nDoABC:"
+		print "  Name:", DoABC.Name.rstrip('\0')
+		print "  Flags: %08x" % DoABC.Flags.Value
+		print "    kDoAbcLazyInitializeFlag: ", DoABC.Flags.kDoAbcLazyInitializeFlag
+		abc = f.disassembleABC(DoABC)
+		print "  ABC metadata:"
+		print "    major:minor version: %s:%s" % (abc.major, abc.minor)
+		print "    scriptName: %s" % abc.scriptName[:-1]
+		print "    publicNs: %s" % abc.publicNs
 
 	return
 
