@@ -1,10 +1,10 @@
 '''
 swffile.py - SWF file parser module
-(C) 2015 by Tillmann Werner, <tillmann.werner@gmx.de>
+(C) 2015-2016 by Tillmann Werner, <tillmann.werner@gmx.de>
 '''
 
 __author__ = 'Tillmann Werner'
-__version__ =  '0.1.0.0'
+__version__ =  '0.2.0.0'
 
 import pylzma
 import zlib
