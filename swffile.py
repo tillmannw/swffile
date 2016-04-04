@@ -175,6 +175,8 @@ class SwfHeader():
 
 		self.HeaderSize = 8+off+4
 
+		return
+
 
 class SwfTag():
 	def __init__(self, data):
@@ -190,12 +192,16 @@ class SwfTag():
 		self.Data = data[off:off+self.Length]
 		self.TotalSize = self.Length + off
 
+		return
+
 
 class RGB():
 	def __init__(self, data):
 		self.Red = ord(data[0])
 		self.Green = ord(data[1])
 		self.Blue = ord(data[2])
+
+		return
 
 
 class SwfFormatError(Exception):
@@ -238,6 +244,8 @@ class Flash():
 		self.DoABC = []
 
 		self.parseTags()
+
+		return
 
 
 	def parseHeader(self, data):
@@ -335,6 +343,8 @@ class Flash():
 				if tag.Type not in self.tagParser.keys(): continue
 				self.tagParser[tag.Type](tag)
 
+		return
+
 
 	def getActionConstantPool(self):
 		tagData = []
@@ -360,6 +370,8 @@ class Flash():
 	def parseSetBackgroundColor(self, tag):
 		self.SetBackgroundColor = lambda:0
 		self.SetBackgroundColor.BackgroundColor = RGB(tag.Data)
+
+		return
 
 
 	# tag 0x29
@@ -390,6 +402,8 @@ class Flash():
 		self.ScriptLimits.MaxRecursionDepth, = unpack('<H', tag.Data[0:2])
 		self.ScriptLimits.ScriptTimeoutSeconds, = unpack('<H', tag.Data[2:4])
 
+		return
+
 
 	# tag 0x45
 	def parseFileAttributes(self, tag):
@@ -406,6 +420,7 @@ class Flash():
 		self.Flags.HasMetadata = 0 != self.Flags.Value & (1 << 4)
 		self.Flags.ActionScript3 = 0 != self.Flags.Value & (1 << 3)
 		self.Flags.UseNetwork = 0 != self.Flags.Value & (1 << 0)
+		return
 
 
 	# tag 0c4c
@@ -423,6 +438,8 @@ class Flash():
 			self.SymbolClass.Tags.append(TagId)
 			self.SymbolClass.Names.append(Name)
 			off += 2 + len(Name) + 1
+
+		return
 
 
 	# tag 0x52
@@ -541,18 +558,10 @@ class Flash():
 					if argtype in ['offset']:
 						args.append(self.__getS24__(code[off+size:off+size+3]) + off + size + 3)
 						size += 3
-#						arg = hex(arg)[2:]
 
 					if argtype in ['u30', 'register', 'multiname', 'method']:
 						args.append(self.__getU30__(code[off+size:]))
 						size += self.__getU30len__(code[off+size:])
-
-#					if argtype in ['multiname_u30', 'register_register']:
-#						l = self.__getU30len__(code[off+1:])
-#						size +=l
-#						size += self.__getU30len__(code[off+1+l:])
-#						# FIXME: resolve these
-#						args.append(argtype)
 
 					if argtype in ['integer']:
 						i = self.__getU30__(code[off+size:])
@@ -1572,4 +1581,3 @@ class Abc():
 			self.parseTraits(m.activation)
 
 ''' end of 3rd-party code'''
-
